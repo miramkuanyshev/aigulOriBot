@@ -14,6 +14,10 @@ module.exports = db.define("user", {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    firstname: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
     username: {
         type: DataTypes.STRING,
         allowNull: true,

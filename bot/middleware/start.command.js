@@ -1,24 +1,26 @@
 
 const { bot } = require("../connections/token.connection");
 const saveUser = require("../common/sequalize/saveUser");
-const { Scenes, session } = require("telegraf");
-const menuScene = require('../scenes/menu.scenes');
+require ('../middleware/stage/stage');
 
-const stage = new Scenes.Stage([menuScene]);
-    bot.use(session());
-    bot.use(stage.middleware());
+
+
 module.exports = bot.start(async (ctx) => {
-    // Присваиваем значение переменным
-    const login = String(ctx.chat.id);
-    const username = ctx.chat.username ?? "anon";
-    const firstName = ctx.update.message.chat.first_name;
-    // сохраняем пользователя в базу данных
-    await saveUser(login, username, firstName);
-    // отправляем приветственное сообщение
-    await ctx.replyWithPhoto({ source: 'bot/img/1.jpg' }, { caption: `✋🏼 Привет ${firstName}! \nМеня зовут Айгуль, сейчас я расскажу тебе о том как начать свой бизнес с нуля без вложений! \n \n Начну через 3... 2... 1...` })
-    // оправляем отбивку и входим в главное меню 
-    setTimeout(function () {
-        ctx.reply("Начинаем 🔥")
-        ctx.scene.enter("menuScene");
-    }, 3000)
+   try {
+     // Присваиваем значение переменным
+     const login = String(ctx.chat.id);
+     const username = ctx.chat.username ?? "anon";
+     const firstname = ctx.update.message.chat.first_name;
+     // сохраняем пользователя в базу данных
+     await saveUser(login, username, firstname);
+     // отправляем приветственное сообщение
+     await ctx.replyWithPhoto({ source: 'bot/img/1.jpg' }, { caption: `✋🏼 Привет ${firstname}! \nМеня зовут Айгуль, сейчас я расскажу тебе о том как начать свой бизнес с нуля без вложений! \n \n Начну через 3... 2... 1...` });
+     // оправляем отбивку и входим в главное меню 
+     setTimeout(async function () {
+         await ctx.reply("Начинаем 🔥");
+         await ctx.scene.enter("menuScene");
+     }, 3000)
+   } catch {
+    await ctx.reply("Что-то пошло не так")
+   }
 });

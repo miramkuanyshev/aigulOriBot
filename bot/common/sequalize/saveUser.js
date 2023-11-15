@@ -2,7 +2,7 @@ const db = require('../../connections/db.connection');
 const UserModel = require("../../models/user.model")
 
 
-const saveUser = async (login, username, firstName) => {
+const saveUser = async (login, username, firstname) => {
     await db.sync();
 
     const foundUser = await UserModel.findOne({where:{login}});
@@ -10,7 +10,7 @@ const saveUser = async (login, username, firstName) => {
     if (!foundUser){
         await UserModel.create({
             login,
-            firstName,
+            firstname,
             username,
             category: "new"
         })

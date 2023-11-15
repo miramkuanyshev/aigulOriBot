@@ -1,7 +1,10 @@
 const { Scenes} = require("telegraf");
+require ("../middleware/stage/stage");
+const aboutScene = require('./aboutBusines');
 
 
 const menuScene = new Scenes.BaseScene('menuScene');
+
 
 menuScene.enter(async (ctx) => {
     const firstName = ctx.update.message.chat.first_name;
@@ -17,7 +20,27 @@ menuScene.enter(async (ctx) => {
             ]
         }
     })
+});
+
+menuScene.action('whatThis', async (ctx) => {
+    await ctx.scene.leave();
+    await ctx.scene.enter("aboutScene");
+});
+
+menuScene.action('zarabotok', async (ctx) => {
+    await ctx.scene.leave();
+    await ctx.scene.enter("joinScene");
+});
+
+menuScene.hears(['Меню'], async (ctx) => {
+    await ctx.reply("Вы находитесь в меню!");
+    await ctx.scene.reenter();
+});
+
+menuScene.hears("/admin", async (ctx)=>{
+    await ctx.scene.leave();
+    await ctx.scene.enter("adminScene");
 })
 
 
-module.exports = menuScene
+module.exports = menuScene;
