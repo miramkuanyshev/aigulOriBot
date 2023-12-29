@@ -9,14 +9,16 @@ const newCategoryScene = require("../../scenes/newCategory");
 const seachUsernameScene = require("../../scenes/seachUserName");
 const senderScene = require("../../scenes/sender");
 const travelScene = require("../../scenes/travelScene");
-const {Postgres} = require('@telegraf/session/pg');
+const { Postgres } = require('@telegraf/session/pg');
 
 
 const store = Postgres({
-    database: process.env.POSTGRESQL_DATABASE,
-    user: process.env.POSTGRESQL_USERNAME,
-    password: process.env.POSTGRESQL_PASSWORD,
-    host: process.env.POSTGRESQL_HOST,
+    user: 'gen_user',
+    host: '94.241.138.78',
+    database: 'postgres',
+    password: 'postgres',
+    port: 5432,
+    dialect: 'postgres',
 });
 
 
