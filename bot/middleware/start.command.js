@@ -1,12 +1,15 @@
 
 const { bot } = require("../connections/token.connection");
 const saveUser = require("../common/sequalize/saveUser");
+const { Sequelize } = require("sequelize");
+const db = require("../connections/db.connection");
 require ('../middleware/stage/stage');
 
 
 
 module.exports = bot.start(async (ctx) => {
    try {
+      await db.authenticate();
      // Присваиваем значение переменным
      const login = String(ctx.chat.id);
      const username = ctx.chat.username ?? "anon";
