@@ -13,10 +13,10 @@ const {Postgres} = require('@telegraf/session/pg');
 
 
 const store = Postgres({
-    database: process.env.POSTGRES_DATABASE,
-    user: process.env.POSTGRES_USERNAME,
-    password: process.env.POSTGRES_PASSWORD,
-    host: process.env.POSTGRES_HOST,
+    database: process.env.POSTGRESQL_DATABASE,
+    user: process.env.POSTGRESQL_USERNAME,
+    password: process.env.POSTGRESQL_PASSWORD,
+    host: process.env.POSTGRESQL_HOST,
 });
 
 
