@@ -5,9 +5,9 @@ const UserModel = require("../../models/user.model")
 const saveUser = async (login, username, firstname) => {
     await db.sync();
 
-    const foundUser = await UserModel.findOne({where:{login}});
+    const foundUser = await UserModel.findOne({ where: { login } });
 
-    if (!foundUser){
+    if (!foundUser) {
         await UserModel.create({
             login,
             firstname,
@@ -18,7 +18,8 @@ const saveUser = async (login, username, firstname) => {
     }
 
     if (foundUser.username !== username) {
-        await UserModel.update({username}, {where: {login}});
+        await UserModel.update({ username }, { where: { login } })
+        return
     }
 }
 
